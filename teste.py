@@ -42,7 +42,6 @@ def criar_blocos(qtde_blocos_linha, qtde_linhas_blocos):
 
 
 cores = {
-    'amarelo': (),
     'azul': (0, 0, 255),
     'branco': (255, 255, 255),
     'preto': (0, 0, 0),
