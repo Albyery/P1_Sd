@@ -26,19 +26,19 @@ pontuacao_jogador1 = 0
 pontuacao_jogador2 = 0
 
 
-def criar_blocos(qtde_blocos_linha, qtde_linhas_blocos):
+def criar_blocos(qtd_blocos_linha, qtd_linhas_blocos):
     largura_tela = tamanho_tela[0]
     distancia_entre_blocos = 5
-    largura_bloco = largura_tela / qtde_blocos_linha - distancia_entre_blocos
+    largura_bloco = largura_tela / qtd_blocos_linha - distancia_entre_blocos
     altura_bloco = 15
     distancia_entre_linhas = altura_bloco + 10
-    blocos = []
-    for j in range(qtde_linhas_blocos):
-        for i in range(qtde_blocos_linha):
+    brick = []
+    for j in range(qtd_linhas_blocos):
+        for i in range(qtd_blocos_linha):
             bloco = pygame.Rect(i * (largura_bloco + distancia_entre_blocos), j * distancia_entre_linhas, largura_bloco,
                                 altura_bloco)
-            blocos.append(bloco)
-    return blocos
+            brick.append(bloco)
+    return brick
 
 
 cores = {
@@ -49,7 +49,6 @@ cores = {
     'vermelho': (255, 0, 0)
 }
 
-fim_jogo = False
 movimento_bola = [3, -3]
 ultimo_rebatedor = None
 
@@ -61,8 +60,8 @@ def desenhar_inicio_jogo():
     pygame.draw.rect(tela, cores["branco"], bola)
 
 
-def desenhar_blocos(blocos):
-    for bloco in blocos:
+def desenhar_blocos(blocks):
+    for bloco in blocks:
         pygame.draw.rect(tela, cores["verde"], bloco)
 
 
@@ -91,29 +90,29 @@ som_pontuacao = pygame.mixer.Sound('Music/collide_score.mp3')
 som_vencedor = pygame.mixer.Sound('Music/winning.mp3')
 
 
-def movimentar_bola(bola):
+def movimentar_bola(ball):
     global ultimo_rebatedor, pontuacao_jogador1, pontuacao_jogador2
     movimento = movimento_bola
-    bola.x += movimento[0]
-    bola.y += movimento[1]
+    ball.x += movimento[0]
+    ball.y += movimento[1]
 
-    if bola.x <= 0 or bola.x + tamanho_bola >= tamanho_tela[0]:
+    if ball.x <= 0 or ball.x + tamanho_bola >= tamanho_tela[0]:
         movimento[0] = -movimento[0]
         som_colisao.play()
-    if bola.y <= 0 or bola.y + tamanho_bola >= tamanho_tela[1]:
+    if ball.y <= 0 or ball.y + tamanho_bola >= tamanho_tela[1]:
         movimento[1] = -movimento[1]
         som_colisao.play()
-    if bola.colliderect(jogador):
+    if ball.colliderect(jogador):
         movimento[1] = -movimento[1]
         som_colisao.play()
         ultimo_rebatedor = 'jogador1'
-    elif bola.colliderect(jogador2):
+    elif ball.colliderect(jogador2):
         movimento[1] = -movimento[1]
         som_colisao.play()
         ultimo_rebatedor = 'jogador2'
 
     for bloco in blocos[:]:
-        if bola.colliderect(bloco):
+        if ball.colliderect(bloco):
             blocos.remove(bloco)
             som_pontuacao.play()
             movimento[1] = -movimento[1]
