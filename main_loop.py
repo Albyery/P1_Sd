@@ -131,9 +131,7 @@ def atualizar_pontuacao():
     tela.blit(texto_jogador1, (0, 660))
     tela.blit(texto_jogador2, (560, 660))
 
-    if len(blocos) == 0:
-        return True
-    return False
+    return True if len(blocos) == 0 else False
 
 
 blocos = criar_blocos(qtde_blocos_linha, qtde_linhas_blocos)
